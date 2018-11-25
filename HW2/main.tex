@@ -1,0 +1,149 @@
+\documentclass[a4paper]{article}
+
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{mathrsfs}
+\usepackage{amsfonts,amssymb}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Homework 2}
+\author{Yang Li, Jimmy Jusuf, Zhirong Zhang, Tiangang Zhang }
+
+\begin{document}
+\maketitle
+
+
+\section{Problem 1}
+\begin{eqnarray*}
+L(x,\lambda)=(x-a)^2+(y-b)^2-\lambda_1 x+\lambda_2 (x-1)-\lambda_3 y +\lambda_4 (y-1)
+\end{eqnarray*}
+Then local minimizer should subject to
+
+\begin{equation}  
+\left\{  
+             \begin{array}{ll}
+             2(x^*-a)-\lambda_1^*+\lambda_2^*=0\\  
+             2(y^*-a)-\lambda_3^*+\lambda_4^*=0\\
+             \lambda_1^* x^*=0\\
+             \lambda_2^*(x^*-1)=0\\
+             \lambda_3^* y^*=0\\
+             \lambda_4^*(y^*-1)=0\\
+             \lambda_i^* \geq 0 & for \,  i=1,2,3,4
+             \end{array}  
+\right.  
+\end{equation}  
+
+Solve the equations above, the solution is
+\begin{equation}  
+x^*=
+\left\{  
+             \begin{array}{ll}
+             0 & a\leq 0\\
+             a & a \in (0,1) \\
+             1 & a \geq 1
+             \end{array}  
+\right.  
+\end{equation} 
+\begin{equation}  
+y^*=
+\left\{  
+             \begin{array}{ll}
+             0 & b\leq 0\\
+             b & b \in (0,1) \\
+             1 & b \geq 1
+             \end{array}  
+\right.  
+\end{equation}  
+
+\section{Problem 2}
+Let $x_2-10=x^+-x^-,\, x^+,x^-\geq 0$, use the property of absolute value inequalities, the problem become
+\begin{equation}  
+min \, 2x_1+3|x^+-x^-|, \text{ subject to}
+\left\{  
+             \begin{array}{ll}
+             x_1+2+10+x^+-x^-\leq 5\\
+             -x_1-2+10+x^+-x^-\leq 5\\
+             x_1+2-10-x^++x^-\leq 5\\
+             -x_1-2-10-x^++x^-\leq 5\\
+             x^+,x^-\geq 0
+             \end{array}  
+\right.  
+\end{equation}  
+
+Notice that 
+\begin{equation}  
+2x_1+3(x^++x^-) \geq 2x_1+3|x^+-x^-|
+\end{equation}  
+now we consider 
+\begin{equation}  
+min \,2x_1+3(x^++x^-) , \text{ subject to}
+\left\{  
+             \begin{array}{ll}
+             x_1+2+10+x^+-x^-\leq 5\\
+             -x_1-2+10+x^+-x^-\leq 5\\
+             x_1+2-10-x^++x^-\leq 5\\
+             -x_1-2-10-x^++x^-\leq 5\\
+             x^+,x^-\geq 0
+             \end{array}  
+\right.  
+\end{equation}  
+Let $x_1^*,x^{+*},x^{-*}$ be the minimizer of the problem above, the next step is to prove that  $x_1^*,x^{+*},x^{-*}$ is the minimizer of the original problem, we prove by contradiction.
+If there is $x_1',x_2'$ subject to the conditions and 
+\begin{equation}  
+2x_1'^*+3|x_2'-10| < 2x_1^*+3(x^{+*}+x^{+*})
+\end{equation}  
+Let 
+\begin{eqnarray*}  
+x_{1\star}=x_1'\\
+x^{+}_\star=\{x_2'-10\}^+\\
+x^{^-}_\star=\{-x_2'+10\}^+
+\end{eqnarray*}  
+Then 
+\begin{equation}  
+2x_{1\star}+3(x^{+}_\star+x^{^-}_\star) < 2x_1^*+3(x^{+*}+x^{+*})
+\end{equation}  
+Contradition!
+
+Recall equation(5) we know that
+\begin{equation}  
+2x_1'^*+3|x_2'-10| = 2x_1^*+3(x^{+*}+x^{+*})
+\end{equation}  
+So we can always use the minimizer of problem (6) to get the minimizer and minimum value of the original problem. Then problem has been transfered into a LP
+\begin{equation}  
+min \,2x_1+3(x^++x^-) , \text{ subject to}
+\left\{  
+             \begin{array}{ll}
+             x_1+2+10+x^+-x^-\leq 5\\
+             -x_1-2+10+x^+-x^-\leq 5\\
+             x_1+2-10-x^++x^-\leq 5\\
+             -x_1-2-10-x^++x^-\leq 5\\
+             x^+,x^-\geq 0
+             \end{array}  
+\right.  
+\end{equation}  
+
+\section{Problem 3}
+According to no-arbitrage condition, there is no need to trade a currency back to the currency it traded from. The trade from one currency to another currency happens at most for one time. So we can write the problem as 
+\begin{equation}  
+max \,\sum_{i \not= N} f_{iN} x_{iN}, \text{ subject to}
+\left\{  
+             \begin{array}{ll}
+             \sum_{j\not= 1}x_{1j}\leq B,\\
+             \sum_{j\not= 1}x_{1j}\leq u_1,\\
+             \sum_{j\not= 1, i}x_{ij}\leq \sum_{k\not=i,N}f_{ki} x_{ki},& for\, i\not= 1,N\\
+             \sum_{j\not= 1, i}x_{ij}\leq u_i,& for\, i\not= 1,N\\
+             x_{ij}\geq 0, & for\, i\not= j,i\not=N
+             \end{array}  
+\right.  
+\end{equation}  
+\end{document}
