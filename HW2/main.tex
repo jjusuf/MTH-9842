@@ -15,6 +15,8 @@
 %\usepackage{mathrsfs}
 \usepackage{amsfonts,amssymb}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
 
 \title{Homework 2}
 \author{Yang Li, Jimmy Jusuf, Zhirong Zhang, Tiangang Zhang }
@@ -23,9 +25,9 @@
 \maketitle
 
 
-\section*{Problem 1}
+\section{Problem 1}
 \begin{eqnarray*}
-L(x,\lambda)=(x-a)^2+(y-b)^2-\lambda_1 x+\lambda_2 (x-1)-\lambda_3 y +\lambda_4 (y-1)
+L(x,y,\lambda)=(x-a)^2+(y-b)^2-\lambda_1 x+\lambda_2 (x-1)-\lambda_3 y +\lambda_4 (y-1)
 \end{eqnarray*}
 Then local minimizer should subject to
 
@@ -65,7 +67,46 @@ y^*=
 \right.  
 \end{equation}  
 
-\section*{Problem 2}
+\section{Problem 2}
+\subsection{Solution 1}
+We replace constraints of the form
+\begin{equation} |x_i| \leq b_i \end{equation}
+with
+\begin{equation}
+\begin{split}
+	x_i \leq b_i \\
+	-x_i \leq b_i
+\end{split}
+\end{equation}
+
+To deal with the absolute value in the objective function, we introduce a split variable
+\[ y = y^+ - y^- \textnormal{~with constraints~} y^+, y^- \geq 0 \]
+
+Note that $|y| = y^+ + y^-$ because by construction, for any value of $y$, $y^+ * y^- = 0,   y^+, y^- \geq 0$.
+
+Thus,
+\begin{gather}
+x_2 - 10 = y \implies x_2 = y + 10 = y^+ - y^- + 10 \\
+|x_2 - 10| = |y| = y^+ + y^- \\
+\end{gather}
+
+By change of variables and substitutions above, the nonlinear problem
+\[ \min 2 x_1 + 3|x_2 - 10| \quad \textnormal{subject to~} |x_1 + 2| + |x_2| \leq 5 \]
+can be rewritten as LP problem
+\begin{equation}
+\min \, 2x_1+3(y^+ + y^-), \textnormal{ subject to}
+\left\{
+    \begin{array}{l}
+    x_1 + 2 + y^+ - y^- + 10 \leq 5 \\
+    -x_1 - 2 + y^+ - y^- + 10 \leq 5 \\
+    x_1 + 2 - y^+ + y^- - 10 \leq 5 \\
+    -x_1 - 2 - y^+ + y^- - 10 \leq 5 \\
+     y^+, y^- \geq 0
+    \end{array}
+\right.
+\end{equation}
+
+\subsection{Solution 2}
 Let $x_2-10=x^+-x^-,\, x^+,x^-\geq 0$, use the property of absolute value inequalities, the problem become
 \begin{equation}  
 \min \, 2x_1+3|x^+-x^-|, \textnormal{ subject to}
@@ -132,7 +173,7 @@ So we can always use the minimizer of problem (6) to get the minimizer and minim
 \right.  
 \end{equation}  
 
-\section*{Problem 3}
+\section{Problem 3}
 According to no-arbitrage condition, there is no need to trade a currency back to the currency it traded from. The trade from one currency to another currency happens at most for one time. So we can write the problem as 
 \begin{equation}  
 max \,\sum_{i \not= N} f_{iN} x_{iN}, \text{ subject to}
