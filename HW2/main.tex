@@ -19,7 +19,8 @@
 \setlength{\parindent}{0pt}
 
 \title{Homework 2}
-\author{Yang Li, Jimmy Jusuf, Zhirong Zhang, Tiangang Zhang }
+\author{Group L\\
+Yang Li, Jimmy Jusuf, Zhirong Zhang, Tiangang Zhang}
 
 \begin{document}
 \maketitle
@@ -174,9 +175,33 @@ So we can always use the minimizer of problem (6) to get the minimizer and minim
 \end{equation}  
 
 \section{Problem 3}
-According to no-arbitrage condition, there is no need to trade a currency back to the currency it traded from. The trade from one currency to another currency happens at most for one time. So we can write the problem as 
+There are $N$ currencies, index $i=1,\dots,N$.
+
+We start with $B$ units of currency $1$ and we want to maximize the number
+of units of currency $N$ through a sequence of trades. One unit of 
+currency $i$ can be exchanged for $f_{ij}$ units of currency $j$.
+
+Decision variables: let $x_{ij} =$ amount of currency $i$ to be converted 
+into currency $j$. Clearly $\sum_{j\not= 1}x_{1j}\leq B$. We also have 
+constraint $\sum_{j\not= 1}x_{1j}\leq u_1$, since we exchange out of 
+currency 1 exactly once into currency $j$ ($j \not= 1,N$), 
+where $u_i$ is the limit on the total amount of currency $i$ that can be
+traded. If we exchange out of currency 1 into currency $N$ through 
+intermediate currency $j$, the trading limit is
+$(\sum_{j \not= 1,N}x_{ij} + \sum_{k \not= 1,N}x_{jk}) \leq u_j$, for $j \not= 1,N$.
+
+Objective function: maximize $\sum_{i \not= N} f_{iN} * x_{iN}$, essential
+maximizing the total inflow into currency $N$ from all other currencies.
+To prevent exchanging out of currency $i$ into the same currency, 
+we impose constraint $x_{ii}=0$ for $i=1,\dots,N$. To avoid ``loops''
+and force trading progress towards currency $N$, we let 
+$x_{ij}\geq 0$ for $i=1,\dots,N, j>i$ and $x_{ij}=0$ for $i=1,\dots,N, j<i$,
+basically $x_{ij}$ is an upper triangular square matrix with zero diagonal.
+
+According to no-arbitrage condition, there is no need to trade a currency back to 
+the currency it traded from. The trade from one currency to another currency happens at most for one time. So we can write the problem as 
 \begin{equation}  
-max \,\sum_{i \not= N} f_{iN} x_{iN}, \text{ subject to}
+\max \,\sum_{i \not= N} f_{iN} * x_{iN}, \text{ subject to}
 \left\{  
              \begin{array}{ll}
              \sum_{j\not= 1}x_{1j}\leq B,\\
