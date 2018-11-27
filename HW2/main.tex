@@ -82,20 +82,25 @@ with
 \end{split}
 \end{equation}
 
-To deal with the absolute value in the objective function, we introduce a split variable
-and a free variable $U$,
-\[ y = y^+ - y^- \textnormal{~with constraints~} y^+, y^- \geq 0; y^+ \geq U, y^- \geq -U \]
+%To deal with the absolute value in the objective function, we introduce a split variable
+%and a free variable $U$,
+%\[ y = y^+ - y^- \textnormal{~with constraints~} y^+, y^- \geq 0; y^+ \geq U, y^- \geq -U \]
+To deal with the absolute value in the objective function, we introduce a new variable $U$, such that
+\[ x_2 -10 \leq U \]
+\[ 10 - x_2 \leq U \]
 
-Note that $|y| = y^+ + y^-$ because by construction, for any value of $U$, $y^+ * y^- = 0,   y^+, y^- \geq 0$.
+%Note that $|y| = y^+ + y^-$ because by construction, for any value of $U$, $y^+ * y^- = 0,   y^+, y^- \geq 0$.
+Note that $U \geq |x_2 -10|$ always holds.
 
-Thus,
-\begin{gather}
-x_2 - 10 = y \implies x_2 = y + 10 = y^+ - y^- + 10 \\
-|x_2 - 10| = |y| = y^+ + y^- \\
-\end{gather}
+%Thus,
+%\begin{gather}
+%x_2 - 10 = y \implies x_2 = y + 10 = y^+ - y^- + 10 \\
+%|x_2 - 10| = |y| = y^+ + y^- \\
+%\end{gather}
 
 By change of variables and substitutions above, the nonlinear problem
-\[ \min 2 x_1 + 3|x_2 - 10| \quad \textnormal{subject to~} |x_1 + 2| + |x_2| \leq 5 \]
+%\[ \min 2 x_1 + 3|x_2 - 10| \quad \textnormal{subject to~} |x_1 + 2| + |x_2| \leq 5 \]
+\[ \min 2 x_1 + 3U \quad \textnormal{subject to~} |x_1 + 2| + |x_2| \leq 5 \]
 can be rewritten as LP problem
 \begin{equation}
 \min \, 2x_1+3(y^+ + y^-), \textnormal{ subject to}
@@ -105,7 +110,9 @@ can be rewritten as LP problem
     -x_1 - 2 + y^+ - y^- + 10 \leq 5 \\
     x_1 + 2 - y^+ + y^- - 10 \leq 5 \\
     -x_1 - 2 - y^+ + y^- - 10 \leq 5 \\
-     y^+, y^- \geq 0
+%     y^+, y^- \geq 0
+    x_2 -10 \leq U \\
+    10 - x_2 \leq U 
     \end{array}
 \right.
 \end{equation}
