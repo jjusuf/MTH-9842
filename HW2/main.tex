@@ -69,6 +69,8 @@ y^*=
 \end{equation}  
 
 \section{Problem 2}
+We present two slightly different solutions below.
+
 \subsection{Solution 1}
 We replace constraints of the form
 \begin{equation} |x_i| \leq b_i \end{equation}
@@ -81,9 +83,10 @@ with
 \end{equation}
 
 To deal with the absolute value in the objective function, we introduce a split variable
-\[ y = y^+ - y^- \textnormal{~with constraints~} y^+, y^- \geq 0 \]
+and a free variable $U$,
+\[ y = y^+ - y^- \textnormal{~with constraints~} y^+, y^- \geq 0; y^+ \geq U, y^- \geq -U \]
 
-Note that $|y| = y^+ + y^-$ because by construction, for any value of $y$, $y^+ * y^- = 0,   y^+, y^- \geq 0$.
+Note that $|y| = y^+ + y^-$ because by construction, for any value of $U$, $y^+ * y^- = 0,   y^+, y^- \geq 0$.
 
 Thus,
 \begin{gather}
@@ -142,7 +145,7 @@ now we consider
 Let $x_1^*,x^{+*},x^{-*}$ be the minimizer of the problem above, the next step is to prove that  $x_1^*,x^{+*},x^{-*}$ is the minimizer of the original problem, we prove by contradiction.
 If there is $x_1',x_2'$ subject to the conditions and 
 \begin{equation}  
-2x_1'^*+3|x_2'-10| < 2x_1^*+3(x^{+*}+x^{+*})
+2x_1'^*+3|x_2'-10| < 2x_1^*+3(x^{+*}+x^{-*})
 \end{equation}  
 Let 
 \begin{eqnarray*}  
@@ -152,13 +155,13 @@ x^{^-}_\star=\{-x_2'+10\}^+
 \end{eqnarray*}  
 Then 
 \begin{equation}  
-2x_{1\star}+3(x^{+}_\star+x^{^-}_\star) < 2x_1^*+3(x^{+*}+x^{+*})
+2x_{1\star}+3(x^{+}_\star+x^{^-}_\star) < 2x_1^*+3(x^{+*}+x^{-*})
 \end{equation}  
 Contradiction!
 
 Recall equation(5) we know that
 \begin{equation}  
-2x_1'^*+3|x_2'-10| = 2x_1^*+3(x^{+*}+x^{+*})
+2x_1'^*+3|x_2'-10| = 2x_1^*+3(x^{+*}+x^{-*})
 \end{equation}  
 So we can always use the minimizer of problem (6) to get the minimizer and minimum value of the original problem. Then problem has been transferred into a LP
 \begin{equation}  
@@ -188,26 +191,33 @@ into currency $j$. Clearly $\sum_{j\not= 1}x_{1j}\leq B$. We also have
 constraint $\sum_{j\not= 1}x_{1j}\leq u_1$, since we exchange out of 
 currency 1 exactly once into currency $j$ ($j \not= 1,N$), 
 where $u_i$ is the limit on the total amount of currency $i$ that can be
-traded. If we exchange out of currency 1 into currency $N$ through 
+traded. Exchanging any currency into currency $N$ count as a transaction: 
+$\sum_{i\not= N}x_{iN}\leq u_N$.
+If we exchange out of currency 1 into currency $N$ through 
 intermediate currency $j$, the trading limit becomes
 $(\sum_{j \not= 1,N}x_{ij} + \sum_{k \not= 1,N}x_{jk}) \leq u_j$, for $j \not= 1,N$.
 
 Objective function: maximize $\sum_{i \not= N} f_{iN} * x_{iN}$, essential
-maximizing the total inflow into currency $N$ from all other currencies. 
+maximizing the total inflow into currency $N$ from all other currencies.
+The constraints are presented next.
+No outflow from currency $N$ into other currencies: $x_{Nj}=0$ for $j=1,\dots,N$.
+To prevent exchanging out of currency $i$ into the same currency, 
+we impose constraint $x_{ii}=0$ for $i=1,\dots,N-1$; otherwise $x_{ij}$ can be
+any non-negative value
+% To ``force'' trading progress towards currency $N$ and avoid ``loops'', we let 
+$x_{ij}\geq 0$ for $i=1,\dots,N, i\not= j$ and for $i=j=N$.
+% and $x_{ij}=0$ for $i=1,\dots,N, j<i$.
+
 The no-arbitrage condition 
 $f_{i_1 i_2}\,f_{i_2 i_3}\dots f_{i_{k-1} i_k}\,f_{i_k i_1}\leq 1 $ means
 that if we start with any currency, continually exchange one currency into another
 currency, and eventually back into the original currency, we can never end up
 with more units of the original currency, i.e. if we start with 1 unit, at
 most we get back 1 unit, or could be less than 1, after exchanging into a series of
-other currencies. It also implies there is no trading ``loops'' or trading 
-sequences in which one can increase currency count in this economy. 
+other currencies. It also implies there can be no trading ``loops'' or trading 
+sequences in which one can increase currency count beyond its initial allocation
+in this economy. 
 The trade from one currency to another currency happens at most for one time.
-To prevent exchanging out of currency $i$ into the same currency, 
-we impose constraint $x_{ii}=0$ for $i=1,\dots,N$. To
-``force'' trading progress towards currency $N$ and avoid ``loops'', we let 
-$x_{ij}\geq 0$ for $i=1,\dots,N, j>i$ and $x_{ij}=0$ for $i=1,\dots,N, j<i$,
-basically $x_{ij}$ is an upper triangular square matrix with zero diagonal.
 
 % According to no-arbitrage condition, there is no need to trade a 
 % currency back to the currency it traded from. 
@@ -218,9 +228,11 @@ In summary, the LP formulation of this problem is
              \begin{array}{ll}
              \sum_{j\not= 1}x_{1j}\leq B,\\
              \sum_{j\not= 1}x_{1j}\leq u_1,\\
-             \sum_{j\not= 1, i}x_{ij}\leq \sum_{k\not=i,N}f_{ki} x_{ki},& \textnormal{for~} i\not= 1,N\\
+             \sum_{i\not= N}x_{iN}\leq u_N,\\
              \sum_{j\not= 1, i}x_{ij}\leq u_i,& \textnormal{for~} i\not= 1,N\\
-             x_{ij}\geq 0, & \textnormal{for~} i\not= j,i\not=N
+             \sum_{j\not= 1, i}x_{ij}\leq \sum_{k\not=i,N}f_{ki} x_{ki},& \textnormal{for~} i\not= 1,N\\
+             x_{ij}\geq 0, & \textnormal{for~} i\not= j,i\not=N\\
+             x_{ij}=0, & \textnormal{for~} i= j,i=N
              \end{array}  
 \right.  
 \end{equation}  
