@@ -99,11 +99,11 @@ Note that $U \geq |x_2 -10|$ always holds.
 %\end{gather}
 
 By change of variables and substitutions above, the nonlinear problem
-%\[ \min 2 x_1 + 3|x_2 - 10| \quad \textnormal{subject to~} |x_1 + 2| + |x_2| \leq 5 \]
-\[ \min 2 x_1 + 3U \quad \textnormal{subject to~} |x_1 + 2| + |x_2| \leq 5 \]
+\[ \min 2 x_1 + 3|x_2 - 10| \quad \textnormal{subject to~} |x_1 + 2| + |x_2| \leq 5 \]
 can be rewritten as LP problem
 \begin{equation}
-\min \, 2x_1+3(y^+ + y^-), \textnormal{ subject to}
+%\min \, 2x_1+3(y^+ + y^-), \textnormal{ subject to}
+\min \, 2x_1+3U, \textnormal{ subject to}
 \left\{
     \begin{array}{l}
     x_1 + 2 + y^+ - y^- + 10 \leq 5 \\
