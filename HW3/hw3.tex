@@ -1,0 +1,139 @@
+\documentclass[fleqn]{article}
+
+%% Language and font encodings
+%\usepackage[english]{babel}
+%\usepackage[utf8x]{inputenc}
+%\usepackage[T1]{fontenc}
+
+%% Sets page size and margins
+\usepackage[margin=1in]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+%\usepackage{mathrsfs}
+\usepackage{amsfonts,amssymb}
+%\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{parskip}
+\usepackage{ragged2e}
+
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\tr}{^\intercal}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\nablax}{\nabla_{\!\mat x}}
+
+\DeclareMathOperator{\Lagr}{\mathcal{L}}
+
+%\setlength{\parindent}{0pt}
+
+\title{Homework 2}
+\author{Group L\\
+Yang Li, Jimmy Jusuf, Zhirong Zhang, Tiangang Zhang}
+
+\begin{document}
+\maketitle
+
+
+\section{Problem 1}
+
+\section{Problem 2}
+
+Let
+\begin{equation}
+\mat A = \begin{pmatrix}
+  13 & 12 & -2 \\
+  12 & 17 & 6 \\
+  -2 & 6 & 12 \\
+  \end{pmatrix} = \mat A\tr,\quad 
+\mat a = \begin{pmatrix} -22 \\ -14.5 \\ 13 \\ \end{pmatrix},\quad
+b = 1.
+\end{equation}
+\begin{equation}
+\textnormal{objective function to be minimized }f:\real^3\rightarrow\real,
+\enskip f(\mat x)=\frac12 \mat x\tr \mat A \mat x + \mat a\tr x + b,
+\end{equation}
+\begin{equation}\label{eq3}
+\textnormal{subject to } {-1}\leq x_i\leq 1, i=1,2,3
+\enskip\textnormal{ or } \begin{pmatrix} -1\\-1\\-1 \end{pmatrix}
+  \leq \mat x\leq \begin{pmatrix} 1\\1\\1 \end{pmatrix},
+  \mat x\in\real^3.
+\end{equation}
+
+Write inequality constraints \eqref{eq3} as 
+$h_1(\mat x)=-\mat x+\begin{pmatrix} -1\\-1\\-1 \end{pmatrix}\leq 0$
+and
+$h_2(\mat x)=\mat x+\begin{pmatrix} -1\\-1\\-1 \end{pmatrix}\leq 0$,
+$h_1, h_2:\real^3\rightarrow\real$.
+Note that
+$\nablax f(\mat x)=\mat A\mat x + \mat a=
+  \vect{21\\14.5\\-11} + \vect{-22\\14.5\\13} = \vect{-1\\0\\2}$,
+$\nablax h_1(\mat x)=\vect{-1\\-1\\-1}$, 
+$\nablax h_2(\mat x)=\vect{1\\1\\1}$.
+
+Let $
+\Lambda_1=\begin{pmatrix}\lambda_1\\ \lambda_2\\ \lambda_3\end{pmatrix},\enskip 
+\Lambda_2=\begin{pmatrix}\lambda_4\\ \lambda_5\\ \lambda_6\end{pmatrix}$ be the Lagrange multipliers
+for constraints $h_1(\mat x)$ and $h_2(\mat x)$ respectively.
+
+Define Lagrangian
+\begin{gather}
+\Lagr(\mat x, \mat\Lambda)=f(\mat x)+ \Lambda_1\tr\cdot h_1(\mat x) + 
+  \Lambda_2\tr\cdot h_2(\mat x)
+\end{gather}
+
+%    Given $\mat x^* = \vect{1 \\ 0.5 \\ -1}$
+%and $\lambda =
+%\begin{pmatrix} \lambda_1 - \lambda_2 \\ \lambda_3 - \lambda_4 \\ \lambda_5 - \lambda_6 \\ \end{pmatrix}$
+
+For $\mat x^*$ to be a local minimum, we want to show
+the following KKT Necessary Conditions are met.
+\begin{gather}
+\nablax \Lagr(\mat x^*, \Lambda^*) = 
+  \nablax f(\mat x) + (\Lambda_1^*)\tr\cdot\nablax h_1(\mat x)
+  + (\Lambda_2^*)\tr\cdot\nablax h_2(\mat x) = 0 \label{eq5}\\
+%  &= (\mat A\mat x + \mat a) + (\Lambda_1^*)\tr\cdot\vect{-1\\-1\\-1}
+%    + (\Lambda_2^*)\tr\cdot\vect{1\\1\\1}
+(\Lambda_1^*)\tr \cdot h_1(\mat x^*) = 0 \label{eq6}\\
+(\Lambda_2^*)\tr \cdot h_2(\mat x^*) = 0 \label{eq7}\\
+\Lambda_1^* \geq 0 \label{eq8}\\
+\Lambda_2^* \geq 0 \label{eq9}
+% d^T \nabla_{xx}^2 L(x^*, \lambda^*) d > 0
+\end{gather}
+
+Plugging in $\mat x^* = \vect{1 \\ 0.5 \\ -1}$,\enskip
+\begin{gather}
+\nabla_{\!\mat x} \Lagr(\mat x^*, \Lambda^*) = \vect{-1\\0\\2}
+  +\vect{-\lambda_1\\-\lambda_2\\-\lambda_3}
+  +\vect{\lambda_4\\ \lambda_5\\ \lambda_6}=0 \tag{\ref{eq5}a}\label{eq5a}\\
+\vect{\lambda_1&\lambda_2&\lambda_3} \vect{-2\\-1.5\\0} = 0
+  \implies \lambda_1=\lambda_2=0 \tag{\ref{eq6}a}\label{eq6a}\\
+\vect{\lambda_4&\lambda_5&\lambda_6} \vect{0\\-0.5\\-2} = 0
+  \implies \lambda_5=\lambda_6=0 \tag{\ref{eq7}a}\label{eq7a}
+%\Lambda_2^* \cdot h_2(\mat x^*) = 0 \\
+%\Lambda_1^* \geq 0 \\
+%\Lambda_2^* \geq 0 \\
+\end{gather}
+The \emph{complementary slackness condition} forces
+$\lambda_1,\lambda_2,\lambda_5,\lambda_6$ to be zero as
+$h_1(x_1), h_1(x_2), h_2(x_2), h_2(x_3) \leq 0$ in
+equations \eqref{eq6a} and \eqref{eq7a}.
+Back-substitution into \eqref{eq5a} yields $\lambda_4=1$ and 
+$\lambda_3=-2$. All the $\lambda$'s satisfy conditions \eqref{eq8}
+and \eqref{eq9}.
+
+We have shown the KKT Necessary Conditions are met and there is
+a unique vector of Lagrange multipliers for all the constraints.
+
+%From the constraints and the given solution, we have
+%\begin{gather}
+%\lambda_2 = \lambda_3 = \lambda_4 = \lambda_5 = 0 \\
+%\lambda_1 = 1 \\
+%\lambda_6 = 2
+%\end{gather}
+
+%As all the leading principal minor of \(A\) is positive, the second
+%order condition is met.
+
+\end{document}
