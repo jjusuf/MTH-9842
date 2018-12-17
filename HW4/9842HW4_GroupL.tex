@@ -1,0 +1,874 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{9842HW4\_GroupL}
+    
+    
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Question.1}\label{question.1}
+
+    \subsection{(i)}\label{i}
+
+Using lagrange multiplier, \[
+min - \sum \log x_i, \quad \text{s.t.} \Sigma x_i = 1
+\] Denote \[
+L = - \sum \log x_i + \lambda(\Sigma x_i - 1)
+\] Apply F.O.C
+
+\[
+\frac{\partial L}{\partial x_i} = 0 \Rightarrow -\frac{1}{x_i} + \lambda = 0 \Rightarrow x_i = \frac 1\lambda
+\] \[
+\frac{\partial L}{\partial \lambda} = 0 \Rightarrow \Sigma x_i = 1 \Rightarrow x_i = \frac 1n, \lambda = n
+\]
+
+    \subsection{(ii)}\label{ii}
+
+Similar to (i), denote that \[
+L = -\sum\log x_i + (Ax - b)^T\lambda
+\] Apply F.O.C,
+
+Here, \(A_{ji}\) is the jth row, ith col element in A. \[
+\frac{\partial L}{\partial x_i} = 0 \Rightarrow  -\frac{1}{x_i} + \lambda\sum_j A_{ji} = 0
+\] \[
+\frac{\partial L}{\partial\lambda} = 0 \Rightarrow Ax = b.
+\] From the first equaiton, we find that
+\[x_i = \frac{1}{\lambda\sum_jA_{ji}} = \frac{1}{(A^T\lambda)_i}\].
+
+Also we have, \[Ax = 
+A\left(\begin{array}{c}\frac{1}{\lambda \sum_j A_{j1}}\\
+\vdots\\
+\frac{1}{\lambda \sum_j A_{jn}}\\
+\end{array}\right) = 
+\left(
+\begin{array}{c}\sum_i\frac{ A_{1i}}{\lambda \sum_j A_{ji}}\\
+\vdots\\
+\sum_i\frac{ A_{ni}}{\lambda \sum_j A_{ji}}\\
+\end{array}\right)
+\] Thus we have \[
+x^TA^T \lambda = \left(
+\begin{array}{c}\sum_i\frac{ A_{1i}}{\lambda \sum_j A_{ji}}&
+\cdots&
+\sum_i\frac{ A_{ni}}{\lambda \sum_j A_{ji}}\\
+\end{array}\right)
+\left(\begin{array}{cc}\lambda\\ 
+\vdots\\
+\lambda \end{array}\right) = n
+\] Thus we get the dual larange function \[
+q(\lambda) = \inf_{\lambda}( -\sum\log x_i + (Ax - b)^T\lambda) = -b^T\lambda - \sum_{i = 1}^{n} \frac{1}{(A^T\lambda)_i} + n
+\] i.e. \[
+\max q(\lambda) = -b^T\lambda +\sum_{i = 1}^{n} {(A^T\lambda)_i} + n\qquad \text{where } \lambda > 0.
+\]
+
+This is the dual problem.
+
+    \subsection{(iii)}\label{iii}
+
+Already solved in (ii)
+
+    \subsection{(iv)}\label{iv}
+
+By newton's method, we need to calculate the matrix equation \[
+\begin{bmatrix}
+\nabla^2 f &A^T\\
+A& 0
+\end{bmatrix}
+\begin{bmatrix}
+-\Delta x\\
+\lambda
+\end{bmatrix}
+=
+\begin{bmatrix}
+-\nabla f(x)\\
+0
+\end{bmatrix}
+\] It's easy to see that
+
+\[
+\nabla f = (-\frac{1}{x_1},\cdots, -\frac{1}{x_n})^T
+\]
+
+\[
+\nabla^2 f = diag(\frac{1}{x_1^2},\cdots, \frac{1}{x_n^2})
+\]
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{linalg} \PY{k}{import} \PY{n}{inv}
+        \PY{k}{def} \PY{n+nf}{NewtonMethod\PYZus{}acp}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{x0}\PY{p}{,} \PY{n}{alpha}\PY{p}{,} \PY{n}{beta}\PY{p}{,} \PY{n}{tol}\PY{p}{)}\PY{p}{:}
+            \PY{k}{def} \PY{n+nf}{decrement}\PY{p}{(}\PY{n}{dfx}\PY{p}{,} \PY{n}{H}\PY{p}{)}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{} define the function to calculate lambda(x), which is the Newton decrement}
+                \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{dfx}\PY{o}{.}\PY{n}{T}\PY{p}{,}\PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{diag}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{n}{np}\PY{o}{.}\PY{n}{diag}\PY{p}{(}\PY{n}{H}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{dfx}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+            \PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{)} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}
+            \PY{n}{x} \PY{o}{=} \PY{n}{x0}
+            \PY{n}{H} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{diag}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)} \PY{c+c1}{\PYZsh{} H is hessian of f(x)}
+            \PY{n}{upper} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{column\PYZus{}stack}\PY{p}{(}\PY{p}{(}\PY{n}{H}\PY{p}{,} \PY{n}{A}\PY{o}{.}\PY{n}{T}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} [Hessian, A\PYZca{}T]}
+            \PY{n}{lower} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{column\PYZus{}stack}\PY{p}{(}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{row}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} [A, 0]}
+            \PY{n}{KKT} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{row\PYZus{}stack}\PY{p}{(}\PY{p}{(}\PY{n}{upper}\PY{p}{,} \PY{n}{lower}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} this the the matrix on the left}
+            \PY{n}{dfx} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1} \PY{o}{/} \PY{n}{x} \PY{c+c1}{\PYZsh{} this is \PYZhy{} nabla f(x)}
+            \PY{n}{RHS} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{dfx}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{row}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} right hand side}
+            \PY{n}{epsilon} \PY{o}{=}  \PY{n}{decrement}\PY{p}{(}\PY{n}{dfx}\PY{p}{,} \PY{n}{H}\PY{p}{)} \PY{c+c1}{\PYZsh{} get the Newton decrement}
+            \PY{n}{count} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{k}{while} \PY{n}{epsilon} \PY{o}{\PYZgt{}} \PY{n}{tol} \PY{o+ow}{and} \PY{n}{count} \PY{o}{\PYZlt{}} \PY{l+m+mi}{500}\PY{p}{:}
+                
+                \PY{n}{count} \PY{o}{=} \PY{n}{count} \PY{o}{+} \PY{l+m+mi}{1}
+                \PY{n}{LHS} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{squeeze}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{inv}\PY{p}{(}\PY{n}{KKT}\PY{p}{)}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{RHS}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                \PY{n}{dx} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{LHS}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{n}{col}\PY{p}{]}
+                \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{1}
+                \PY{c+c1}{\PYZsh{} using backtracking line search}
+                \PY{n}{back\PYZus{}ct}\PY{o}{=}\PY{l+m+mi}{0}
+                \PY{k}{while} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{x} \PY{o}{+} \PY{n}{t} \PY{o}{*} \PY{n}{dx}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{alpha} \PY{o}{*} \PY{n}{t} \PY{o}{*} \PY{n}{dfx}\PY{o}{.}\PY{n}{T}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{dx}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{t} \PY{o}{=} \PY{n}{t} \PY{o}{*} \PY{n}{beta}
+                    \PY{n}{back\PYZus{}ct}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+                    \PY{k}{if} \PY{n}{back\PYZus{}ct}\PY{o}{\PYZgt{}}\PY{l+m+mi}{50}\PY{p}{:}
+                        \PY{k}{break}
+                \PY{c+c1}{\PYZsh{} update the parameters}
+                \PY{n}{x} \PY{o}{=} \PY{n}{x} \PY{o}{+} \PY{n}{t} \PY{o}{*} \PY{n}{dx}
+                \PY{n}{H} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{diag}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}
+                \PY{n}{upper} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{column\PYZus{}stack}\PY{p}{(}\PY{p}{(}\PY{n}{H}\PY{p}{,} \PY{n}{A}\PY{o}{.}\PY{n}{T}\PY{p}{)}\PY{p}{)}
+                \PY{n}{lower} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{column\PYZus{}stack}\PY{p}{(}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{row}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                \PY{n}{KKT} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{row\PYZus{}stack}\PY{p}{(}\PY{p}{(}\PY{n}{upper}\PY{p}{,} \PY{n}{lower}\PY{p}{)}\PY{p}{)}
+                \PY{n}{dfx} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1} \PY{o}{/} \PY{n}{x}
+                \PY{n}{RHS} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{dfx}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{row}\PY{p}{)}\PY{p}{)}
+                \PY{n}{epsilon} \PY{o}{=}  \PY{n}{decrement}\PY{p}{(}\PY{n}{dfx}\PY{p}{,} \PY{n}{H}\PY{p}{)}
+            \PY{k}{return} \PY{n}{x}\PY{p}{,}\PY{n}{epsilon}\PY{p}{,}\PY{n}{count}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{k}{def} \PY{n+nf}{NewtonMethod\PYZus{}acp\PYZus{}new\PYZus{}decrement}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{x0}\PY{p}{,} \PY{n}{alpha}\PY{p}{,} \PY{n}{beta}\PY{p}{,} \PY{n}{tol}\PY{p}{)}\PY{p}{:}
+             \PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{)} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}
+             \PY{n}{x} \PY{o}{=} \PY{n}{x0}
+             \PY{n}{H} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{diag}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)} \PY{c+c1}{\PYZsh{} H is hessian of f(x)}
+             \PY{n}{upper} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{column\PYZus{}stack}\PY{p}{(}\PY{p}{(}\PY{n}{H}\PY{p}{,} \PY{n}{A}\PY{o}{.}\PY{n}{T}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} [Hessian, A\PYZca{}T]}
+             \PY{n}{lower} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{column\PYZus{}stack}\PY{p}{(}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{row}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} [A, 0]}
+             \PY{n}{KKT} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{row\PYZus{}stack}\PY{p}{(}\PY{p}{(}\PY{n}{upper}\PY{p}{,} \PY{n}{lower}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} this the the matrix on the left}
+             \PY{n}{dfx} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1} \PY{o}{/} \PY{n}{x} \PY{c+c1}{\PYZsh{} this is \PYZhy{} nabla f(x)}
+             \PY{n}{RHS} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{dfx}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{row}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} right hand side}
+             \PY{n}{epsilon} \PY{o}{=}  \PY{l+m+mi}{100} \PY{c+c1}{\PYZsh{} get the Newton decrement}
+             \PY{n}{count} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{k}{while} \PY{n}{epsilon} \PY{o}{\PYZgt{}} \PY{n}{tol} \PY{o+ow}{and} \PY{n}{count} \PY{o}{\PYZlt{}} \PY{l+m+mi}{500}\PY{p}{:}
+                 
+                 \PY{n}{count} \PY{o}{=} \PY{n}{count} \PY{o}{+} \PY{l+m+mi}{1}
+                 \PY{n}{LHS} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{squeeze}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{inv}\PY{p}{(}\PY{n}{KKT}\PY{p}{)}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{RHS}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{dx} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{LHS}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{n}{col}\PY{p}{]}
+                 \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{1}
+                 \PY{c+c1}{\PYZsh{} using backtracking line search}
+                 \PY{n}{back\PYZus{}ct}\PY{o}{=}\PY{l+m+mi}{0}
+                 \PY{k}{while} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{x} \PY{o}{+} \PY{n}{t} \PY{o}{*} \PY{n}{dx}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{alpha} \PY{o}{*} \PY{n}{t} \PY{o}{*} \PY{n}{dfx}\PY{o}{.}\PY{n}{T}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{dx}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{t} \PY{o}{=} \PY{n}{t} \PY{o}{*} \PY{n}{beta}
+                     \PY{n}{back\PYZus{}ct}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+                     \PY{k}{if} \PY{n}{back\PYZus{}ct}\PY{o}{\PYZgt{}}\PY{l+m+mi}{50}\PY{p}{:}
+                         \PY{k}{break}
+                 \PY{c+c1}{\PYZsh{} update the parameters}
+                 \PY{n}{last\PYZus{}x}\PY{o}{=}\PY{n}{x}
+                 \PY{n}{x} \PY{o}{=} \PY{n}{x} \PY{o}{+} \PY{n}{t} \PY{o}{*} \PY{n}{dx}
+                 \PY{n}{H} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{diag}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}
+                 \PY{n}{upper} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{column\PYZus{}stack}\PY{p}{(}\PY{p}{(}\PY{n}{H}\PY{p}{,} \PY{n}{A}\PY{o}{.}\PY{n}{T}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{lower} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{column\PYZus{}stack}\PY{p}{(}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{row}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{KKT} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{row\PYZus{}stack}\PY{p}{(}\PY{p}{(}\PY{n}{upper}\PY{p}{,} \PY{n}{lower}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{dfx} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1} \PY{o}{/} \PY{n}{x}
+                 \PY{n}{RHS} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{dfx}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{row}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{epsilon} \PY{o}{=}  \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{last\PYZus{}x}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{o}{+}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+             \PY{k}{return} \PY{n}{x}\PY{p}{,}\PY{n}{epsilon}\PY{p}{,}\PY{n}{count}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{n}{a} \PY{o}{=} \PY{l+m+mf}{0.1}
+         \PY{n}{b} \PY{o}{=} \PY{l+m+mf}{0.5}
+         \PY{n}{tol} \PY{o}{=} \PY{l+m+mf}{0.0001}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{n}{x}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mf}{0.4}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{]}\PY{p}{)}
+         \PY{n}{A}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{n}{NewtonMethod\PYZus{}acp}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{,} \PY{n}{tol}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}32}]:} (array([0.26666667, 0.26666667, 0.26666667]), 1.7320508075688772, 500)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{n}{NewtonMethod\PYZus{}acp\PYZus{}new\PYZus{}decrement}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{,} \PY{n}{tol}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}33}]:} (array([0.26666667, 0.26666667, 0.26666667]), 4.398875281426429e-05, 5)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}10}]:} array([0.01, 0.16, 0.09])
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}35}]:} \PY{n}{A1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{500}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}36}]:} \PY{k}{def} \PY{n+nf}{cst}\PY{p}{(}\PY{n}{j}\PY{p}{,}\PY{n}{i}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{n}{j}\PY{o}{==}\PY{n}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1} \PY{o+ow}{or} \PY{n}{j}\PY{o}{==}\PY{n}{i}\PY{p}{:}
+                 \PY{k}{return} \PY{l+m+mi}{1}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{k}{return} \PY{l+m+mi}{0}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}37}]:} \PY{n}{A2}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{n}{cst}\PY{p}{(}\PY{n}{j}\PY{p}{,}\PY{n}{i}\PY{p}{)} \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{500}\PY{p}{)}\PY{p}{]} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}38}]:} \PY{n}{A}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{row\PYZus{}stack}\PY{p}{(}\PY{p}{(}\PY{n}{A1}\PY{p}{,}\PY{n}{A2}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} \PY{n}{A}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}39}]:} array([[1, 1, 1, {\ldots}, 1, 1, 1],
+                [1, 1, 0, {\ldots}, 0, 0, 0],
+                [0, 1, 1, {\ldots}, 0, 0, 0],
+                {\ldots},
+                [0, 0, 0, {\ldots}, 0, 0, 0],
+                [0, 0, 0, {\ldots}, 0, 0, 0],
+                [0, 0, 0, {\ldots}, 0, 0, 0]])
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}40}]:} \PY{n}{x0} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.5}\PY{o}{*}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{500}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}41}]:} \PY{n}{x0}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}41}]:} array([  1. ,   1.5,   2. ,   2.5,   3. ,   3.5,   4. ,   4.5,   5. ,
+                  5.5,   6. ,   6.5,   7. ,   7.5,   8. ,   8.5,   9. ,   9.5,
+                 10. ,  10.5,  11. ,  11.5,  12. ,  12.5,  13. ,  13.5,  14. ,
+                 14.5,  15. ,  15.5,  16. ,  16.5,  17. ,  17.5,  18. ,  18.5,
+                 19. ,  19.5,  20. ,  20.5,  21. ,  21.5,  22. ,  22.5,  23. ,
+                 23.5,  24. ,  24.5,  25. ,  25.5,  26. ,  26.5,  27. ,  27.5,
+                 28. ,  28.5,  29. ,  29.5,  30. ,  30.5,  31. ,  31.5,  32. ,
+                 32.5,  33. ,  33.5,  34. ,  34.5,  35. ,  35.5,  36. ,  36.5,
+                 37. ,  37.5,  38. ,  38.5,  39. ,  39.5,  40. ,  40.5,  41. ,
+                 41.5,  42. ,  42.5,  43. ,  43.5,  44. ,  44.5,  45. ,  45.5,
+                 46. ,  46.5,  47. ,  47.5,  48. ,  48.5,  49. ,  49.5,  50. ,
+                 50.5,  51. ,  51.5,  52. ,  52.5,  53. ,  53.5,  54. ,  54.5,
+                 55. ,  55.5,  56. ,  56.5,  57. ,  57.5,  58. ,  58.5,  59. ,
+                 59.5,  60. ,  60.5,  61. ,  61.5,  62. ,  62.5,  63. ,  63.5,
+                 64. ,  64.5,  65. ,  65.5,  66. ,  66.5,  67. ,  67.5,  68. ,
+                 68.5,  69. ,  69.5,  70. ,  70.5,  71. ,  71.5,  72. ,  72.5,
+                 73. ,  73.5,  74. ,  74.5,  75. ,  75.5,  76. ,  76.5,  77. ,
+                 77.5,  78. ,  78.5,  79. ,  79.5,  80. ,  80.5,  81. ,  81.5,
+                 82. ,  82.5,  83. ,  83.5,  84. ,  84.5,  85. ,  85.5,  86. ,
+                 86.5,  87. ,  87.5,  88. ,  88.5,  89. ,  89.5,  90. ,  90.5,
+                 91. ,  91.5,  92. ,  92.5,  93. ,  93.5,  94. ,  94.5,  95. ,
+                 95.5,  96. ,  96.5,  97. ,  97.5,  98. ,  98.5,  99. ,  99.5,
+                100. , 100.5, 101. , 101.5, 102. , 102.5, 103. , 103.5, 104. ,
+                104.5, 105. , 105.5, 106. , 106.5, 107. , 107.5, 108. , 108.5,
+                109. , 109.5, 110. , 110.5, 111. , 111.5, 112. , 112.5, 113. ,
+                113.5, 114. , 114.5, 115. , 115.5, 116. , 116.5, 117. , 117.5,
+                118. , 118.5, 119. , 119.5, 120. , 120.5, 121. , 121.5, 122. ,
+                122.5, 123. , 123.5, 124. , 124.5, 125. , 125.5, 126. , 126.5,
+                127. , 127.5, 128. , 128.5, 129. , 129.5, 130. , 130.5, 131. ,
+                131.5, 132. , 132.5, 133. , 133.5, 134. , 134.5, 135. , 135.5,
+                136. , 136.5, 137. , 137.5, 138. , 138.5, 139. , 139.5, 140. ,
+                140.5, 141. , 141.5, 142. , 142.5, 143. , 143.5, 144. , 144.5,
+                145. , 145.5, 146. , 146.5, 147. , 147.5, 148. , 148.5, 149. ,
+                149.5, 150. , 150.5, 151. , 151.5, 152. , 152.5, 153. , 153.5,
+                154. , 154.5, 155. , 155.5, 156. , 156.5, 157. , 157.5, 158. ,
+                158.5, 159. , 159.5, 160. , 160.5, 161. , 161.5, 162. , 162.5,
+                163. , 163.5, 164. , 164.5, 165. , 165.5, 166. , 166.5, 167. ,
+                167.5, 168. , 168.5, 169. , 169.5, 170. , 170.5, 171. , 171.5,
+                172. , 172.5, 173. , 173.5, 174. , 174.5, 175. , 175.5, 176. ,
+                176.5, 177. , 177.5, 178. , 178.5, 179. , 179.5, 180. , 180.5,
+                181. , 181.5, 182. , 182.5, 183. , 183.5, 184. , 184.5, 185. ,
+                185.5, 186. , 186.5, 187. , 187.5, 188. , 188.5, 189. , 189.5,
+                190. , 190.5, 191. , 191.5, 192. , 192.5, 193. , 193.5, 194. ,
+                194.5, 195. , 195.5, 196. , 196.5, 197. , 197.5, 198. , 198.5,
+                199. , 199.5, 200. , 200.5, 201. , 201.5, 202. , 202.5, 203. ,
+                203.5, 204. , 204.5, 205. , 205.5, 206. , 206.5, 207. , 207.5,
+                208. , 208.5, 209. , 209.5, 210. , 210.5, 211. , 211.5, 212. ,
+                212.5, 213. , 213.5, 214. , 214.5, 215. , 215.5, 216. , 216.5,
+                217. , 217.5, 218. , 218.5, 219. , 219.5, 220. , 220.5, 221. ,
+                221.5, 222. , 222.5, 223. , 223.5, 224. , 224.5, 225. , 225.5,
+                226. , 226.5, 227. , 227.5, 228. , 228.5, 229. , 229.5, 230. ,
+                230.5, 231. , 231.5, 232. , 232.5, 233. , 233.5, 234. , 234.5,
+                235. , 235.5, 236. , 236.5, 237. , 237.5, 238. , 238.5, 239. ,
+                239.5, 240. , 240.5, 241. , 241.5, 242. , 242.5, 243. , 243.5,
+                244. , 244.5, 245. , 245.5, 246. , 246.5, 247. , 247.5, 248. ,
+                248.5, 249. , 249.5, 250. , 250.5])
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} \PY{n}{res}\PY{o}{=}\PY{n}{NewtonMethod\PYZus{}acp}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{x0}\PY{p}{,} \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{,} \PY{n}{tol}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}43}]:} \PY{n}{res}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}43}]:} (array([  1.25,   1.25,   2.25,   2.25,   3.25,   3.25,   4.25,   4.25,
+                   5.25,   5.25,   6.25,   6.25,   7.25,   7.25,   8.25,   8.25,
+                   9.25,   9.25,  10.25,  10.25,  11.25,  11.25,  12.25,  12.25,
+                  13.25,  13.25,  14.25,  14.25,  15.25,  15.25,  16.25,  16.25,
+                  17.25,  17.25,  18.25,  18.25,  19.25,  19.25,  20.25,  20.25,
+                  21.25,  21.25,  22.25,  22.25,  23.25,  23.25,  24.25,  24.25,
+                  25.25,  25.25,  26.25,  26.25,  27.25,  27.25,  28.25,  28.25,
+                  29.25,  29.25,  30.25,  30.25,  31.25,  31.25,  32.25,  32.25,
+                  33.25,  33.25,  34.25,  34.25,  35.25,  35.25,  36.25,  36.25,
+                  37.25,  37.25,  38.25,  38.25,  39.25,  39.25,  40.25,  40.25,
+                  41.25,  41.25,  42.25,  42.25,  43.25,  43.25,  44.25,  44.25,
+                  45.25,  45.25,  46.25,  46.25,  47.25,  47.25,  48.25,  48.25,
+                  49.25,  49.25,  50.25,  50.25, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75]), 22.360679774997898, 500)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}44}]:} \PY{n}{NewtonMethod\PYZus{}acp\PYZus{}new\PYZus{}decrement}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{x0}\PY{p}{,} \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{,} \PY{n}{tol}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}44}]:} (array([  1.25,   1.25,   2.25,   2.25,   3.25,   3.25,   4.25,   4.25,
+                   5.25,   5.25,   6.25,   6.25,   7.25,   7.25,   8.25,   8.25,
+                   9.25,   9.25,  10.25,  10.25,  11.25,  11.25,  12.25,  12.25,
+                  13.25,  13.25,  14.25,  14.25,  15.25,  15.25,  16.25,  16.25,
+                  17.25,  17.25,  18.25,  18.25,  19.25,  19.25,  20.25,  20.25,
+                  21.25,  21.25,  22.25,  22.25,  23.25,  23.25,  24.25,  24.25,
+                  25.25,  25.25,  26.25,  26.25,  27.25,  27.25,  28.25,  28.25,
+                  29.25,  29.25,  30.25,  30.25,  31.25,  31.25,  32.25,  32.25,
+                  33.25,  33.25,  34.25,  34.25,  35.25,  35.25,  36.25,  36.25,
+                  37.25,  37.25,  38.25,  38.25,  39.25,  39.25,  40.25,  40.25,
+                  41.25,  41.25,  42.25,  42.25,  43.25,  43.25,  44.25,  44.25,
+                  45.25,  45.25,  46.25,  46.25,  47.25,  47.25,  48.25,  48.25,
+                  49.25,  49.25,  50.25,  50.25, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75, 150.75,
+                 150.75, 150.75, 150.75, 150.75]), 1.9073486328125e-06, 6)
+\end{Verbatim}
+            
+    \section{Question.2}\label{question.2}
+
+    \subsection{(a)}\label{a}
+
+First, show the equivelent between these 4 conditions. \_\_\_ *
+Condition 1 is equivalent to Condition 2
+
+Condition 1 \(\rightarrow\) Condition 2
+
+Suppose \(x \in \mathcal N(A) \cap \mathcal N(H)\) and \(x \neq 0\). In
+condition 2, we have \(Ax = 0\, x \neq 0\). Since
+\(x \in \mathcal N(A) \cap \mathcal N(H)\), we have \(x^THx = 0\), this
+contradict to to second statement.
+
+Condition 2 \(\rightarrow\) Condition 1
+
+If there is an \(x\) s.t. \(Ax = 0\, x \neq 0, x^THX = 0\). Because
+\(H\) is semipositive definate, we must have \(Hx = 0\), i.e.
+\(x \in \mathcal N(A) \cap \mathcal N(H)\) \_\_\_ * Condition 2 is
+equivalent to Condition 3
+
+If \(Ax = 0, x \neq 0\), then because
+\(\mathcal R(F) = \mathcal N (A)\), we have \(x = Fz\) and \(z \neq 0\).
+Then because of 2 we have \(x^T Hx = z^TF^THFZ > 0\)
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\begin{itemize}
+\tightlist
+\item
+  Condition 2 is equivalent to Condition 4 If we have the condition 2.
+  then
+\end{itemize}
+
+\[
+x^T(H + A^TA) = x^THx + \vert\vert A^Tx\vert\vert^2_2 > 0
+\] for all nonzero x, sot the condition 4 holds for \(Q = I\). If the
+fourth condition hols with general semipositive definate form of \(Q\).
+\[
+x^T(H + A^TQA) = x^THx + x^TA^TQAx > 0
+\] for all nonzero \(x\), Therefore if \(Ax = 0\, x \neq 0\), we must
+have \(x\neq 0\) \_\_\_ Second show these four conditions are equivalent
+to nonsigularity of KKT matrix.
+
+Suppose \(x\neq 0\), s.t.\(Ax = 0, Hx = 0\) \[
+\begin{bmatrix}
+H & A^T\\
+A & 0
+\end{bmatrix}
+\begin{bmatrix}
+x\\
+0
+\end{bmatrix} = 0\]
+
+If the KKT matrix is singular, \(x,z\) are not both zero, and we have \[
+\begin{bmatrix}
+H & A^T\\
+A & 0
+\end{bmatrix}
+\begin{bmatrix}
+x\\
+z
+\end{bmatrix} = 0\]
+
+This leads to \(Hx + A^Tz = 0\), and \(Ax = 0\). from the first
+equation, we have \[
+x^THx + x^TA^Tz = 0.
+\] plug in the second equation. we have \(x^THx = 0\), this contradicts
+second condition unless \(x= 0\).
+
+\subsection{(b)}\label{b}
+
+From previous question, we have \(H + A^TA\) is positive definate
+matrix. Then we must hvae \(R \in \mathbb R^{n\times n}\), s.t. \[
+R^T(H + A^TA)R = I
+\] Apply SVD to \(AR\), \(AR = U\Sigma V_1^T\), where
+\(\Sigma = diag(\sigma_1,\cdots, \sigma_p)\). Denote
+\(V_2 \in \mathbb R^{n\times(n-p)}\), s.t. \[
+V = \left[V_1\quad V_2\right]
+\] \(V_2\) is orthogonal, and let \[
+S = \left[\Sigma\quad 0\right] \in \mathbb R^{p\times n}
+\] We have \(AR = USV^T\), then \[
+V^TR^T(H + A^TA)RV = V^TR^THRV + S^TS = I
+\] Becasue \(V^TR^THRV = I - S^TS\) is diagonal matrix, then denote it
+as \(D\) \[
+D = V^TR^THRV = diag(1-\sigma_1^2, \cdots, 1-\sigma_p^2, 1, \cdots, 1)
+\] Apply the transform to KKT matrix, we have
+
+\[
+\begin{bmatrix}
+V^TR^T & 0\\
+0 & U
+\end{bmatrix}
+\begin{bmatrix}
+H & A^T\\
+A & 0
+\end{bmatrix}
+\begin{bmatrix}
+RV & 0\\
+0 & U
+\end{bmatrix}
+=
+\begin{bmatrix}
+D & S^T\\
+S & 0
+\end{bmatrix}
+\] Apply the permutation to hte matrix on the right gives a block
+diaonal matrix with n diagonal blocks. \[
+\begin{bmatrix}
+\lambda_i & \sigma_i\\
+\sigma_i & 0
+\end{bmatrix}
+\] where \(i = 1,2,\cdots, p\),
+
+and \(\lambda_i = 1\) for \(i = p +1, \cdots, n\)
+
+This matrix have eiggenvalues of
+\(\frac{\lambda_i \pm \sqrt{\lambda_i^2 + 4\sigma_i^2}}{2}\), i.e. one
+eigen value is positive, another is negative.
+
+In total, there are n positive evalues and p negative evalues.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
